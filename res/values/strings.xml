@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="app_name">TF2 Backpack</string>
+<string name="enterUsername">Enter your Steam vanity ID</string>
+<string name="submitButton">Submit</string>
+</resources>
