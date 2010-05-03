@@ -24,6 +24,7 @@ package com.hideous.backpack;
 
 import java.util.ArrayList;
 
+import android.text.format.Time;
 import android.util.Log;
 
 public class TF2Item
@@ -50,6 +51,59 @@ public class TF2Item
 		setItemById();
 	}
 	
+	public TF2Item(int itemid, int lvl, int quality, int timestamp) {
+		// TODO Auto-generated constructor stub
+		id = itemid;
+		level = lvl;
+		this.quality = quality;
+		attributes = new ArrayList<TF2ItemAttribute>();
+		setTimestampId(timestamp);
+	}
+
+	private void setTimestampId(int timestamp) {
+		// TODO Auto-generated method stub
+		String qualname = "";
+		switch (quality)
+		{
+			case 7:
+				qualname = "Community ";
+				break;
+			case 8:
+				qualname = "Valve ";
+				break;
+			case 9:
+				qualname = "Self-made ";
+				break;
+		}
+		
+		switch (id)
+		{
+			case 164:
+				itemname = "Grizzled Veteran";
+				drawable = R.drawable.item_all_goldmedal;
+				break;
+			case 165:
+				itemname = "Soldier of Fortune";
+				drawable = R.drawable.item_all_silvermedal;
+				break;
+			case 166:
+				itemname = "Mercenary";
+				drawable = R.drawable.item_all_bronzemedal;
+				break;
+		}
+		
+		long tt = timestamp;
+		
+		Time t = new Time();
+		t.set(tt * 1000);
+		
+		add(NEUTRAL, "Hire Date: " + t.format("%B %e, %Y (%T)"));
+		
+		itemname = qualname.concat(itemname);
+		
+		backpackActivity.numMisc += 1;
+	}
+
 	private void add(int pos, String desc)
 	{
 		attributes.add(new TF2ItemAttribute(pos, desc));
@@ -674,10 +728,12 @@ public class TF2Item
 		Log.i("TF2 Items", itemname);
 		
 		if (id <= 46 || (id >= 56 && id <= 61) || (id >= 127 && id <= 133) || (id >= 153 && id <= 163 && id != 162))
-			backpackActivity.numWeapons  = backpackActivity.numWeapons + 1;
+			backpackActivity.numWeapons += 1;
+		else if (id == 103 || id == 144 || id == 121)
+			backpackActivity.numMisc += 1;
 		else if (id < 5000)
-			backpackActivity.numHats = backpackActivity.numHats + 1;
+			backpackActivity.numHats += 1;
 		else
-			backpackActivity.numCraftables = backpackActivity.numCraftables + 1;
+			backpackActivity.numCraftables += 1;
 	}
 }

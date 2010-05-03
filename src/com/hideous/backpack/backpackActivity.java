@@ -47,7 +47,8 @@ public class backpackActivity extends Activity
 	public static int
 	numHats,
 	numWeapons,
-	numCraftables;
+	numCraftables,
+	numMisc;
 	
 	public static int positionClicked;
 	
@@ -135,6 +136,7 @@ public class backpackActivity extends Activity
 				AlertDialog dlg = (AlertDialog) dialog;
 				dlg.setMessage("Weapons: " + numWeapons + "\n" +
 						"Hats: " + numHats + "\n" +
+						"Misc: " + numMisc + "\n" +
 						"Craftables: " + numCraftables);
 				break;
 		}

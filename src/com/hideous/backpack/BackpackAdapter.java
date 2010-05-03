@@ -66,6 +66,7 @@ public class BackpackAdapter extends BaseAdapter
 		backpackActivity.numHats = 0;
 		backpackActivity.numWeapons = 0;
 		backpackActivity.numCraftables = 0;
+		backpackActivity.numMisc = 0;
 		loadingJson = ProgressDialog.show(c, "", "Loading backpack data...", true);
 		new DownloadJSONTask().execute("ohshit");
 		
@@ -108,7 +109,17 @@ public class BackpackAdapter extends BaseAdapter
 						int itemid = itemjson.getInt("defindex");
 						int level = itemjson.getInt("level");
 						int quality = itemjson.getInt("quality");
-						backpackItems.add(new TF2Item(itemid, level, quality));
+						if (itemid == 164 || itemid == 165 || itemid == 166)
+						{
+							JSONObject timeArray = itemjson.getJSONObject("attributes");
+							int timestamp = timeArray.getInt("143");
+							backpackItems.add(new TF2Item(itemid, level, quality, 
+									timestamp));
+						}
+						else
+						{
+							backpackItems.add(new TF2Item(itemid, level, quality));
+						}
 						
 					}
 				}
