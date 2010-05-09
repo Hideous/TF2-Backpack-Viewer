@@ -28,10 +28,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
@@ -52,7 +56,31 @@ public class usernameActivity extends Activity
         
         //this.setTitle("TF2 Backpack");
         
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(usernameActivity.this);
+        
+        String name = prefs.getString("vanityid", "");
+        
         Button submit = (Button) findViewById(R.id.submitButton);
+        AutoCompleteTextView text = (AutoCompleteTextView) findViewById(R.id.nameField);
+        text.setText(name);
+        text.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				//SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(usernameActivity.this);
+			        
+			    String name = prefs.getString("vanityid", "");
+			    
+			    AutoCompleteTextView text = (AutoCompleteTextView) findViewById(R.id.nameField);
+				// TODO Auto-generated method stub
+				if (text.getSelectionStart() == text.getSelectionEnd()
+						&& text.getSelectionStart() == -1 && text.getText().toString() == name)
+					text.setText("");
+			}
+		});
+        
+        //TODO: Auto-completion. It's a tricky son of a bitch.
+        //text.setAdapter(new PrefsAdapter());
         
         submit.setOnClickListener(
     		new View.OnClickListener()
@@ -63,9 +91,12 @@ public class usernameActivity extends Activity
 				{
 					ConnectivityManager connmgr =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
 					Log.i("TF2 Items", "---------- RELOADING ----------");
-					// TODO Call next Activity, passing text value
 					AutoCompleteTextView text = (AutoCompleteTextView) findViewById(R.id.nameField);
 					vanityId = text.getText().toString();
+					
+					Editor edit = prefs.edit();
+					edit.putString("vanityid", vanityId);
+					edit.commit();
 					
 					if (vanityId.length() == 0)
 					{
@@ -77,11 +108,10 @@ public class usernameActivity extends Activity
 						showDialog(DLG_CONNECT);
 					}
 					else
-					{
+					{	
 						Intent myIntent = new Intent(v.getContext(), backpackActivity.class);
 						startActivityForResult(myIntent, 0);
 					}
-					
 				}
 			}
     	);

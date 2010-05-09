@@ -109,7 +109,7 @@ public class BackpackAdapter extends BaseAdapter
 						int itemid = itemjson.getInt("defindex");
 						int level = itemjson.getInt("level");
 						int quality = itemjson.getInt("quality");
-						if (itemid == 164 || itemid == 165 || itemid == 166)
+						if (itemid == 164 || itemid == 165 || itemid == 166 || itemid == 170)
 						{
 							JSONObject timeArray = itemjson.getJSONObject("attributes");
 							int timestamp = timeArray.getInt("143");

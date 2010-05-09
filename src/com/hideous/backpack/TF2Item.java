@@ -90,14 +90,18 @@ public class TF2Item
 				itemname = "Mercenary";
 				drawable = R.drawable.item_all_bronzemedal;
 				break;
+			case 170:
+				itemname = "Primeval Warrior";
+				drawable = R.drawable.item_all_platinummedal;
+				break;
 		}
 		
 		long tt = timestamp;
 		
-		Time t = new Time();
+		Time t = new Time("GMT");
 		t.set(tt * 1000);
 		
-		add(NEUTRAL, "Hire Date: " + t.format("%B %e, %Y (%T)"));
+		add(NEUTRAL, "Hire Date: " + t.format("%B %e, %Y (%T) GMT"));
 		
 		itemname = qualname.concat(itemname);
 		
